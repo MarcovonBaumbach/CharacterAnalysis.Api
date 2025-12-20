@@ -14,17 +14,17 @@ public class ReflectionService
     public async Task<string> ReflectAsync(string observations)
     {
         var prompt = """
-You are a thoughtful psychological analyst.
+        You are a thoughtful psychological analyst.
 
-Analyze the following observations and provide:
-- a coherent interpretation
-- emotional depth
-- alternative perspectives
-- reflective insight
+        Analyze the following observations and provide:
+        - a coherent interpretation
+        - emotional depth
+        - alternative perspectives
+        - reflective insight
 
-Observations:
-{{$input}}
-""";
+        Observations:
+        {{$input}}
+        """;
 
         var result = await _kernel.InvokePromptAsync(
             prompt,
