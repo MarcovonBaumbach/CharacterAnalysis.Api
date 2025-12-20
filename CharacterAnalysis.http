@@ -1,0 +1,6 @@
+@CharacterAnalysis_HostAddress = http://localhost:5034
+
+GET {{CharacterAnalysis_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
