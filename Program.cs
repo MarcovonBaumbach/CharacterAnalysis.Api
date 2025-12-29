@@ -15,7 +15,11 @@ builder.Services.AddCors(options =>
 var kernel = KernelFactory.Create(builder.Configuration);
 builder.Services.AddSingleton(kernel);
 builder.Services.AddScoped<ReflectionService>();
-builder.Services.AddScoped<IContextResearchService, StubContextResearchService>();
+builder.Services.AddHttpClient<IContextResearchService, TavilyContextResearchService>();
+builder.Services.AddSingleton(new TavilyOptions
+{
+    ApiKey = builder.Configuration["Tavily:ApiKey"]!
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
