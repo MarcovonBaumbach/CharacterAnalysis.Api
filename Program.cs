@@ -15,6 +15,7 @@ builder.Services.AddCors(options =>
 var kernel = KernelFactory.Create(builder.Configuration);
 builder.Services.AddSingleton(kernel);
 builder.Services.AddScoped<ReflectionService>();
+builder.Services.AddSingleton<IShowContextCache, InMemoryShowContextCache>();
 builder.Services.AddHttpClient<IContextResearchService, TavilyContextResearchService>();
 builder.Services.AddSingleton(new TavilyOptions
 {
