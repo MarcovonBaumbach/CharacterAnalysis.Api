@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CharacterAnalysis.Api.Application.Analysis;
+using CharacterAnalysis.Api.Models;
+
 
 [ApiController]
 [Route("[controller]")]
@@ -13,9 +15,12 @@ public class ReflectionController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] string prompt)
+    public async Task<IActionResult> Post([FromBody] CharacterAnalysisRequest request)
     {
-        var response = await _service.ReflectAsync(prompt);
+        var response = await _service.ReflectAsync(
+            request.ShowName,
+            request.Observations,
+            request.Episode);
         return Ok(response);
     }
 }
