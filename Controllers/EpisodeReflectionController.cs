@@ -4,7 +4,7 @@ using CharacterAnalysis.Api.Models;
 
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ReflectionController : ControllerBase
 {
     private readonly ReflectionService _service;
@@ -21,6 +21,12 @@ public class ReflectionController : ControllerBase
             request.ShowName,
             request.Observations,
             request.Episode);
-        return Ok(response);
+
+        var result = new CharacterAnalysisResponse
+        {
+            Reflection = response
+        };
+
+        return Ok(result);
     }
 }
