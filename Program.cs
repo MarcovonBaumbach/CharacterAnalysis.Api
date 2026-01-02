@@ -25,6 +25,7 @@ builder.Services.AddSingleton(new TavilyOptions
 });
 builder.Services.AddDbContext<CharacterAnalysisDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddScoped<IShowMemoryService, ShowMemoryService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

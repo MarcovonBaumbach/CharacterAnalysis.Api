@@ -68,11 +68,6 @@ public class ReflectionController : ControllerBase
             CreatedAt = DateTime.UtcNow
         });
 
-        //var result = new CharacterAnalysisResponse
-        //{
-        //    Reflection = reflection
-        //};
-
         return Ok(new
         {
             showId = show.Id,
