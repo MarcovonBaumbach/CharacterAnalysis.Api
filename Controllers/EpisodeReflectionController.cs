@@ -40,6 +40,9 @@ public class ReflectionController : ControllerBase
         {
             e.Id,
             e.Episode,
+            e.Observations,
+            e.ContextSnapshot,
+            e.Reflection,
             e.CreatedAt
         }));
     }
@@ -50,12 +53,27 @@ public class ReflectionController : ControllerBase
         var show = await _showMemoryService
             .GetOrCreateShowAsync(request.ShowName);
 
+        var pastEpisodes = await _showMemoryService.GetEpisodesAsync(show.Id);
+
+        var recentEpisodes = pastEpisodes
+            .OrderByDescending(e => e.CreatedAt)
+            .Take(10)
+            .OrderBy(e => e.CreatedAt)
+            .ToList();
+
+        var previousEpisodesContext = string.Join(
+            "\n\n---\n\n",
+            recentEpisodes.Select(e =>
+                $"Episode: {e.Episode}\n" +
+                $"Observations: {e.Observations}\n" +
+                $"Reflection: {e.Reflection}")
+        );
+
         var reflection = await _reflectionService.ReflectAsync(
             request.ShowName,
             request.Observations,
-            request.Episode);
-
-        var contextSnapshot = reflection;
+            request.Episode,
+            previousEpisodesContext);
 
         await _showMemoryService.SaveEpisodeAsync(new EpisodeMemoryEntity
         {
@@ -63,8 +81,8 @@ public class ReflectionController : ControllerBase
             TvShowId = show.Id,
             Episode = request.Episode ?? "Unknown",
             Observations = request.Observations,
-            ContextSnapshot = contextSnapshot,
-            Reflection = reflection,
+            ContextSnapshot = reflection.ContextSnapshot,
+            Reflection = reflection.Reflection,
             CreatedAt = DateTime.UtcNow
         });
 

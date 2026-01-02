@@ -27,7 +27,10 @@ public static class ReflectionPrompt
         Speak as a thoughtful human would.
 
         Show Context:
-        {{$context}}
+        {{$contextResearch}}
+
+        Consider the previous episode analyses (if any):
+        {{$previousEpisodesContext}}
 
         Observations:
         {{$input}}

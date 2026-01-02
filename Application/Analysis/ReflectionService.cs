@@ -1,7 +1,7 @@
 using Microsoft.SemanticKernel;
 using CharacterAnalysis.Api.Application.Prompts;
 using CharacterAnalysis.Api.Context;
-
+using CharacterAnalysis.Api.Models;
 
 namespace CharacterAnalysis.Api.Application.Analysis;
 
@@ -18,10 +18,11 @@ public class ReflectionService
         _contextResearch = contextResearch;
     }
 
-    public async Task<string> ReflectAsync(
+    public async Task<ReflectionResult> ReflectAsync(
         string showName,
         string observations,
-        string? episode = null)
+        string? episode = null,
+        string? previousEpisodesContext = null)
     {
         var context = await _contextResearch
             .GetShowContextAsync(showName, episode);
@@ -30,10 +31,15 @@ public class ReflectionService
             ReflectionPrompt.Template,
             new KernelArguments
             {
-                ["context"] = context.Summary,
+                ["previousEpisodesContext"] = previousEpisodesContext ?? "None",
+                ["contextResearch"] = context.Summary,
                 ["input"] = observations
             });
 
-        return result.GetValue<string>() ?? string.Empty;
+        return new ReflectionResult
+        {
+            Reflection = result.GetValue<string>() ?? string.Empty,
+            ContextSnapshot = context.Summary
+        };
     }
 }
