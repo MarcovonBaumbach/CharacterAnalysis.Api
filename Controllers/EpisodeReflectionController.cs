@@ -92,4 +92,11 @@ public class ReflectionController : ControllerBase
             reflection
         });
     }
+
+    [HttpDelete("shows/{showId}")]
+    public async Task<IActionResult> DeleteShow(Guid showId)
+    {
+       await _showMemoryService.DeleteShowAsync(showId);
+       return NoContent();
+    }
 }

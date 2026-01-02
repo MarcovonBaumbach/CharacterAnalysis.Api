@@ -51,4 +51,18 @@ public sealed class ShowMemoryService : IShowMemoryService
             .Where(e => e.TvShowId == showId)
             .OrderBy(e => e.CreatedAt)
             .ToListAsync();
+
+    public async Task DeleteShowAsync(Guid showId)
+    {
+        var show = await _db.TvShows
+            .Include(s => s.Episodes)
+            .FirstOrDefaultAsync(s => s.Id == showId);
+
+        if (show == null)
+            return;
+
+        _db.TvShows.Remove(show);
+        await _db.SaveChangesAsync();
+    }
+
 }

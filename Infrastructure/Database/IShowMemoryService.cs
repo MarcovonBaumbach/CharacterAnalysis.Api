@@ -8,4 +8,5 @@ public interface IShowMemoryService
     Task<IReadOnlyList<TvShowEntity>> GetAllShowsAsync();
     Task<IReadOnlyList<EpisodeMemoryEntity>> GetEpisodesAsync(Guid showId);
     Task<EpisodeMemoryEntity> SaveEpisodeAsync(EpisodeMemoryEntity episode);
+    Task DeleteShowAsync(Guid showId);
 }
