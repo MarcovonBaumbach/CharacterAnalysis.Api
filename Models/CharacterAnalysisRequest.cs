@@ -6,4 +6,3 @@ public class CharacterAnalysisRequest
     public string? Episode { get; set; }
     public string Observations { get; set; } = string.Empty;
 }
-
