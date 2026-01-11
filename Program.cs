@@ -1,6 +1,8 @@
 using CharacterAnalysis.Infrastructure.SemanticKernel;
 using CharacterAnalysis.Api.Application.Analysis;
 using CharacterAnalysis.Api.Context;
+using CharacterAnalysis.Api.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,9 @@ builder.Services.AddSingleton(new TavilyOptions
 {
     ApiKey = builder.Configuration["Tavily:ApiKey"]!
 });
+builder.Services.AddDbContext<CharacterAnalysisDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddScoped<IShowMemoryService, ShowMemoryService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
