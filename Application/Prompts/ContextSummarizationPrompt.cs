@@ -3,7 +3,7 @@ namespace CharacterAnalysis.Api.Application.Prompts;
 public static class ContextSummarizationPrompt
 {
     public const string Template = """
-    You are summarizing factual information about a TV show.
+    You are summarizing factual information about a TV show, to gather information about deep character insides and psychological dynamics.
 
     Source material:
     {{$sources}}
@@ -13,7 +13,7 @@ public static class ContextSummarizationPrompt
     - Avoids episode-by-episode plot details
     - Avoids spoilers beyond general premise
     - Uses neutral, encyclopedic language
-    - Is under 200 words
+    - Is under 500 words
 
     Summary:
     """;
